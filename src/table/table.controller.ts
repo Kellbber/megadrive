@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Table } from 'src/entities/table.entity';
 import { CreateTableDto } from './dto/create-table.dto';
+import { UpdateTableDto } from './dto/update-table.dto';
 import { TableService } from './table.service';
 @ApiTags('table')
 @Controller('table')
@@ -25,5 +26,14 @@ export class TableController {
   @Post()
   create(@Body() dto: CreateTableDto): Promise<Table> {
     return this.tableService.create(dto);
+  }
+
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Editar uma sala por ID'
+  })
+  update(@Param('id') id: string, @Body() dto: UpdateTableDto): Promise<Table>{
+    return this.tableService.update(id,dto);
+
   }
 }
