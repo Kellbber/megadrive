@@ -1,22 +1,22 @@
-import { Injectable } from "@nestjs/common";
-import { Table } from "src/entities/table.entity";
-import { CreateTableDto } from "./dto/create-table.dto";
+import { Injectable } from '@nestjs/common';
+import { Table } from 'src/entities/table.entity';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateTableDto } from './dto/create-table.dto';
 
 @Injectable()
-export class TableService{
-  tables: Table[] = [];
+export class TableService {
+
+  constructor(private readonly prisma: PrismaService) {}
 
   findAll() {
-    return this.tables;
+    return this.prisma.table.findMany();
   }
 
-  create(createTableDto: CreateTableDto){
-    const table: Table ={ id: 'random_id', ...createTableDto}
+  create(dto: CreateTableDto) {
+    const data: Table = { ...dto };
 
-    this.tables.push(table);
-    return table;
+    return this.prisma.table.create({
+      data,
+    });
   }
-
 }
-
-
