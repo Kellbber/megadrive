@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { CreateTableDto } from "./dto/create-table.dto";
 
 @Injectable()
 export class TableService{
@@ -7,10 +8,10 @@ export class TableService{
     return 'Buscar todas as salas;'
   }
 
-  create(){
-    return 'Criar uma sala';
+  create(createTableDto: CreateTableDto){
+    return 'Criar uma sala' + JSON.stringify(createTableDto);
   }
-  
+
 }
 
 
