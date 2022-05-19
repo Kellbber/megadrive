@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Table } from 'src/entities/table.entity';
 import { CreateTableDto } from './dto/create-table.dto';
@@ -11,17 +21,17 @@ export class TableController {
 
   @Get()
   @ApiOperation({
-    summary: 'Listar todas as Salas'
+    summary: 'Listar todas as Salas',
   })
   findAll(): Promise<Table[]> {
     return this.tableService.findAll();
   }
   @Get(':id')
   @ApiOperation({
-    summary: 'Visualizar uma sala única por ID'
+    summary: 'Visualizar uma sala única por ID',
   })
-  findOne(@Param('id') id:string): Promise<Table>{
-    return this.tableService.findOne(id)
+  findOne(@Param('id') id: string): Promise<Table> {
+    return this.tableService.findOne(id);
   }
   @Post()
   create(@Body() dto: CreateTableDto): Promise<Table> {
@@ -30,10 +40,18 @@ export class TableController {
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Editar uma sala por ID'
+    summary: 'Editar uma sala por ID',
   })
-  update(@Param('id') id: string, @Body() dto: UpdateTableDto): Promise<Table>{
-    return this.tableService.update(id,dto);
+  update(@Param('id') id: string, @Body() dto: UpdateTableDto): Promise<Table> {
+    return this.tableService.update(id, dto);
+  }
 
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation ({
+    summary: 'Remover uma sala por ID'
+  })
+  delete(@Param('id') id: string) {
+    this.tableService.delete(id)
   }
 }
