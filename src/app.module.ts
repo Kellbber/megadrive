@@ -5,6 +5,7 @@ import { TableModule } from './table/table.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ProductModule } from './product/product.module';
 import { UserModule } from './no--spec/user/user.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [TableModule, PrismaModule, ProductModule, UserModule],
