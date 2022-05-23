@@ -34,6 +34,9 @@ export class TableController {
     return this.tableService.findOne(id);
   }
   @Post()
+  @ApiOperation({
+    summary: 'Criar uma mesa',
+  })
   create(@Body() dto: CreateTableDto): Promise<Table> {
     return this.tableService.create(dto);
   }
