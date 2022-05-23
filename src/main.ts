@@ -14,6 +14,7 @@ const config = new DocumentBuilder()
 .addTag('status')
 .addTag('table')
 .addTag('product')
+.addTag('user')
 .build();
 
 const document = SwaggerModule.createDocument(app, config);
