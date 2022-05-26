@@ -10,38 +10,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Table{
-  id String @id @default(uuid())
-  number Int @unique
+model Table {
+  id     String @id @default(uuid())
+  number Int    @unique
 
   createdAt DateTime @default(now()) @map("create_at")
   updatedAt DateTime @updatedAt @map("update_at")
-
+  orders    Order[]
   @@map("table")
 }
 
-model Product{
-  id String @id @default(uuid())
-  name String @unique
+model Product {
+  id          String   @id @default(uuid())
+  name        String   @unique
   description String
-  price Float
-  image String
-  createdAt DateTime @default(now()) @map("create_at")
-  updatedAt DateTime @updatedAt @map("update_at")
+  price       Float
+  image       String
+  createdAt   DateTime @default(now()) @map("create_at")
+  updatedAt   DateTime @updatedAt @map("update_at")
+
+  orders      Order[]
 
   @@map("product")
 }
 
-model User{
-  id String @id @default(uuid())
+model User {
+  id       String @id @default(uuid())
   nickname String @unique
-  name  String
+  name     String
   password String
-  image String
-  
+  image    String
+
+
 
   createdAt DateTime @default(now()) @map("create_at")
   updatedAt DateTime @updatedAt @map("update_at")
 
+  orders Order[]
+
   @@map("user")
+}
+
+model Order {
+  id String @id @default(uuid())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
+
+  table   Table  @relation(fields: [tableId], references: [id])
+  tableId String @map("table_id")
+
+  products  Product[]
+  
+  createdAt DateTime  @default(now()) @map("create_at")
+  updatedAt DateTime  @updatedAt @map("update_at")
+
+  @@map("order")
 }
